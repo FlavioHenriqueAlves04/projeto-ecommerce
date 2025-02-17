@@ -2,13 +2,14 @@ package com.mystore.projeto_ecommerce.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-
+import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.util.List;
 
+@Data
+@NoArgsConstructor
 @Entity
 @Table(name = "pedidos")
-@Data
 public class Pedido {
 
     @Id
@@ -19,9 +20,20 @@ public class Pedido {
     @JoinColumn(name = "usuario_id")
     private Usuario cliente;
 
-    @OneToMany
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ItensPedido> itens;
 
     private BigDecimal total;
-    private String status; // PENDENTE, PAGO, ENVIADO, ENTREGUE
+
+    @Enumerated(EnumType.STRING)
+    private StatusPedido status;
+
+    @PrePersist
+    @PreUpdate
+    public void calcularTotal() {
+        this.total = itens.stream()
+                .map(ItensPedido::getSubtotal)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
 }

@@ -1,22 +1,23 @@
 package com.mystore.projeto_ecommerce.domain.service;
 
-
 import com.mystore.projeto_ecommerce.domain.entity.Produto;
+import com.mystore.projeto_ecommerce.domain.exception.ProdutoNaoEncontradoException;
 import com.mystore.projeto_ecommerce.domain.repository.ProdutoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProdutoService {
 
-    @Autowired
-    private ProdutoRepository produtoRepository;
+    private final ProdutoRepository produtoRepository;
+
+    public ProdutoService(ProdutoRepository produtoRepository) {
+        this.produtoRepository = produtoRepository;
+    }
 
     // Adcionar produto
-    public Produto adcionarProduto(Produto produto){
+    public Produto adicionarProduto(Produto produto){
         return produtoRepository.save(produto);
     }
 
@@ -26,17 +27,18 @@ public class ProdutoService {
     }
 
     // Buscar produto pelo id
-    public Optional<Produto> buscarProdutoPorId(Integer id){
-        return produtoRepository.findById(id);
+    public Produto buscarProdutoPorId(Integer id) {
+        return produtoRepository.findById(id)
+                .orElseThrow(() -> new ProdutoNaoEncontradoException("Produto não encontrado"));
     }
 
     // Atualizar produto
-    public Produto atualizarProduto(Integer id,Produto produto){
-        if (produtoRepository.existsById(id)){
-            produto.setId(id);
-            return produtoRepository.save(produto);
-        }
-        throw new RuntimeException("Produto não encontrado");
+    public Produto atualizarProduto(Integer id, Produto produtoAtualizado) {
+        Produto produto = buscarProdutoPorId(id);
+        produto.setNome(produtoAtualizado.getNome());
+        produto.setDescricao(produtoAtualizado.getDescricao());
+        produto.setPreco(produtoAtualizado.getPreco());
+        return produtoRepository.save(produto);
     }
 
     // Excluir Produto
@@ -44,7 +46,7 @@ public class ProdutoService {
         if (produtoRepository.existsById(id)) {
             produtoRepository.deleteById(id);
         } else {
-            throw new RuntimeException("Produto não encontrado");
+            throw new ProdutoNaoEncontradoException("Produto não encontrado");
         }
     }
 
