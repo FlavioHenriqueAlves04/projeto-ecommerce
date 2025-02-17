@@ -3,16 +3,14 @@ package com.mystore.projeto_ecommerce.domain.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.Data;
 
 import java.math.BigDecimal;
 
-@Data
-@NoArgsConstructor
 @Entity
 @Table(name = "produtos")
+@Data
 public class Produto {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -28,14 +26,4 @@ public class Produto {
     private Integer estoque;
 
     private String categoria;
-
-    public Produto(String nome, String descricao, BigDecimal preco, Integer estoque, String categoria) {
-        this.nome = nome;
-        this.descricao = descricao;
-        this.preco = preco;
-        this.estoque = estoque;
-        this.categoria = categoria;
-    }
-
-
 }

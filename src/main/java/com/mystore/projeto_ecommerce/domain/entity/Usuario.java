@@ -2,11 +2,7 @@ package com.mystore.projeto_ecommerce.domain.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
 @Entity
 @Table(name = "usuario")
 public class Usuario {
