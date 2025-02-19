@@ -2,11 +2,7 @@ package com.mystore.projeto_ecommerce.api.controller;
 
 import com.mystore.projeto_ecommerce.api.dto.ItensPedidoDTO;
 import com.mystore.projeto_ecommerce.domain.entity.ItensPedido;
-import com.mystore.projeto_ecommerce.domain.entity.Pedido;
-import com.mystore.projeto_ecommerce.domain.entity.Produto;
 import com.mystore.projeto_ecommerce.domain.service.ItensPedidoService;
-import com.mystore.projeto_ecommerce.domain.service.PedidoService;
-import com.mystore.projeto_ecommerce.domain.service.ProdutoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

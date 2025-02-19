@@ -10,6 +10,7 @@ public class UsuarioDTO {
 
     private String nome;
     private String email;
+    private String login;
     private String senha;
     private String endereco;
     private String telefone;
@@ -20,6 +21,7 @@ public class UsuarioDTO {
         Usuario usuario = new Usuario();
         usuario.setNome(this.nome);
         usuario.setEmail(this.email);
+        usuario.setLogin(this.login);
         usuario.setSenha(this.senha);
         usuario.setEndereco(this.endereco);
         usuario.setTelefone(this.telefone);
